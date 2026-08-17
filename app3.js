@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
         title.style.fontSize = '18px';
 
         const quizImg = document.createElement('img');
-        quizImg.src = 'quiz_2.png'; 
+        quizImg.src = 'quiz_2.PNG'; 
         quizImg.style.width = '100%';
         quizImg.style.height = 'auto';
         quizImg.style.maxWidth = '180px'; 
