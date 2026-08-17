@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillText(`学習者: ${userName}`, SCREEN_WIDTH - 20, 30); ctx.textAlign = "left"; 
         ctx.fillStyle = FLOOR_COLOR; ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
-        ctx.fillText("質量1.0kgの緑色の物体と質量0.50㎏の赤色の物体にはたらく力を作図して", 10, 25);
+        ctx.fillText("質量1.0kgの緑色の物体と質量0.50㎏の赤色の物体にはたらく力をすべて作図して", 10, 25);
         ctx.fillText("再生ボタンを押してみましょう。ただし、1.0㎏の物体にはたらく重力の大きさ", 10, 45);
         ctx.fillText("を10Nとする。また、灰色の床と緑色の物体の上面ははかりになっている。", 10, 65);
         
