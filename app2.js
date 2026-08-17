@@ -513,7 +513,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 両方のベクトルが揃っている場合のみアラートを出す
             if (hasCorrectGravity && hasUpwardForceFromCenter) {
                 generalErrorCount = 0; // 特定の誤りには専用ヒントを出すのでカウントリセット
-                alert("ヒント：上向きの力の大きさは良いですね！ただ、作用点が物体の「中心」になっています。垂直抗力は、物体と床が「接している面」から働きます。");
+                alert("ヒント：はたらいている力の大きさと向きはいいですね！上向きの力は物体の中心からはたらくのであってますか？上向きの力は何という力かも思い出してもう一度作図しましょう！");
                 return false;
             }
             // 【パターン2の判定】
@@ -535,7 +535,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (hasCorrectNormalForce && hasDownwardForceFromBottom) {
                 generalErrorCount = 0; 
-                alert("ヒント：下向きの力（重力）の大きさや向きは合っています！ただ、作用点が「床との接触面」になっています。重力は物体全体に働くため、代表して物体の「中心（重心）」から描きましょう。");
+                alert("ヒント：はたらいている力の大きさと向きはいいですね！下向きの力は床との接触面からはたらくのであってますか？下向きの力は何という力かも思い出してもう一度作図しましょう！");
                 return false;
             }
 
