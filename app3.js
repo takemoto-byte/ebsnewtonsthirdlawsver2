@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = FLOOR_COLOR; ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
         ctx.fillText("上から3.0Nの力で押されて床の上で静止している質量1.5kgの緑色の物体にはたらく力を", 10, 25);
-        ctx.fillText("作図して再生ボタンを押してみましょう。100gの物体にはたらく力の大きさを１Nとする。", 10, 45);
+        ctx.fillText("すべて作図して再生ボタンを押してみましょう。100gの物体にはたらく力の大きさを１Nとする。", 10, 45);
         ctx.fillText("また、灰色の床ははかりになっている。", 10, 65);
 
         box1.draw(ctx);
