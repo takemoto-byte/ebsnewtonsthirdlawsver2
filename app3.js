@@ -434,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             showHintQuizModal(3, isSpecificError); 
                         }
                     } else {
-                        alert("惜しい！\n" + opt.msg ");
+                        alert("惜しい！\n" + opt.msg );
                     }
                 };
                 buttonsDiv.appendChild(btn);
