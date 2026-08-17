@@ -406,7 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert("大正解！\n1.5kg = 1500g だから、重力は 15N になるね。\nそれではもう一度力を作図してみよう！");
                         modal.remove(); // クイズ終了、作図に戻る
                     } else {
-                        alert("惜しい！\n" + opt.msg + "\n100gで1.0Nということは、1.5㎏（1500g）ではどうなるかな？");
+                        alert("惜しい！\n" + opt.msg);
                     }
                 };
                 buttonsDiv.appendChild(btn);
