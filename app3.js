@@ -434,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             showHintQuizModal(3, isSpecificError); 
                         }
                     } else {
-                        alert("惜しい！\n" + opt.msg + "\n100gで1.0Nということは、1.5㎏（1500g）ではどうなるかな？");
+                        alert("惜しい！\n" + opt.msg ");
                     }
                 };
                 buttonsDiv.appendChild(btn);
