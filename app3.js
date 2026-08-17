@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = FLOOR_COLOR; ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
         ctx.fillText("上から3.0Nの力で押されて床の上で静止している質量1.5kgの緑色の物体にはたらく力を", 10, 25);
-        ctx.fillText("すべて作図して再生ボタンを押してみましょう。100gの物体にはたらく力の大きさを１Nとする。", 10, 45);
+        ctx.fillText("作図して再生ボタンを押してみましょう。100gの物体にはたらく力の大きさを１Nとする。", 10, 45);
         ctx.fillText("また、灰色の床ははかりになっている。", 10, 65);
 
         box1.draw(ctx);
@@ -340,7 +340,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- ★ヒントクイズ生成関数（完全版） ---
-    function showHintQuizModal(step, isSingleQuiz = false) {
+    // isSpecificError が true の場合は2問目（ステップ2）で終了する
+    function showHintQuizModal(step, isSpecificError = false) {
         const existing = document.getElementById('hintModal');
         if (existing) existing.remove();
 
@@ -395,13 +396,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.style.padding = '12px'; btn.style.fontSize = '16px'; btn.style.cursor = 'pointer';
                 btn.onclick = () => {
                     if (opt.correct) {
-                        if (isSingleQuiz) {
-                            alert("正解！物体には下向きの「重力」と「指から受ける力」、そして上向きに「垂直抗力」の3つがはたらいています。\n力の種類がわかりましたね！それではもう一度、種類と大きさに気をつけて力を作図してみよう！");
-                            modal.remove(); 
-                        } else {
-                            alert("正解！物体には下向きの「重力」と「指から受ける力」、そして上向きに「垂直抗力」の3つがはたらいています。");
-                            showHintQuizModal(2, false); 
-                        }
+                        // ★特定エラーでも通常でも、正解したら必ずステップ2へ進む！
+                        alert("正解！物体には下向きの「重力」と「指から受ける力」、そして上向きに「垂直抗力」の3つがはたらいています。\n続いて、力の大きさについて考えてみよう！");
+                        showHintQuizModal(2, isSpecificError); 
                     } else {
                         alert("もう一度よく考えてみよう！\n" + opt.msg);
                     }
@@ -419,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { text: "1.5 N", correct: false, msg: "1.5kg は何gか計算してみよう。" },
                 { text: "10 N", correct: false, msg: "それは質量1.0kgのときの重力だね。" },
                 { text: "15 N", correct: true, msg: "" },
-                { text: "150 N", correct: false, msg: "桁をもう一度確認してみよう。" }
+                { text: "18 N", correct: false, msg: "上から押される力を足していませんか？" }
             ];
             options.forEach(opt => {
                 const btn = document.createElement('button');
@@ -427,8 +424,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.style.padding = '12px'; btn.style.fontSize = '16px'; btn.style.cursor = 'pointer';
                 btn.onclick = () => {
                     if (opt.correct) {
-                        alert("大正解！\n1.5kg = 1500g だから、重力は 15N になるね。\nそれでは、最後のステップで床からの力を考えてみよう！");
-                        showHintQuizModal(3, false); 
+                        // ★特定エラー（18N・18Nのミス）の場合は、ここで作図に戻す！
+                        if (isSpecificError) {
+                            alert("大正解！\n1.5kg = 1500g だから、重力は 15N になるね。\n力の種類と大きさがわかりましたね！それではもう一度気をつけて力を作図してみよう！");
+                            modal.remove(); 
+                        } else {
+                            // 通常の5回ミスの場合は、最後のステップ3へ進む
+                            alert("大正解！\n1.5kg = 1500g だから、重力は 15N になるね。\nそれでは、最後のステップで床からの力を考えてみよう！");
+                            showHintQuizModal(3, isSpecificError); 
+                        }
                     } else {
                         alert("惜しい！\n" + opt.msg + "\n100gで1.0Nということは、1.5㎏（1500g）ではどうなるかな？");
                     }
@@ -556,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (hasGravity18 && hasNormal18) {
                     generalErrorCount = 0;
-                    showHintQuizModal(1, true); // ★ クイズ1だけを単発で表示
+                    showHintQuizModal(1, true); // ★ 2問連続（ステップ2で終了）のクイズを表示
                     return false;
                 }
             }
