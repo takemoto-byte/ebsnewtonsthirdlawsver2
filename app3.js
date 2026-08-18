@@ -83,7 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let calculatedMass1 = 0.0;
     let showMassText = false;
     
-    let generalErrorCount = 0; // ★追加：エラーカウント変数
+    let generalErrorCount = 0; // エラーカウント変数
+
+    let currentAttemptDataURL = null; 
+    let previousAttemptImage = null;
 
     // --- クラス定義 ---
     class PhysicsObject {
@@ -116,6 +119,52 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- メインロジック ---
+
+    // カスタムアラート関数（画面を暗くしない） 
+    function showCustomAlert(msg, callback) {
+        const existing = document.getElementById('customAlert');
+        if (existing) existing.remove();
+
+        const alertDiv = document.createElement('div');
+        alertDiv.id = 'customAlert';
+        alertDiv.style.position = 'fixed';
+        alertDiv.style.top = '20px'; 
+        alertDiv.style.left = '50%';
+        alertDiv.style.transform = 'translateX(-50%)';
+        alertDiv.style.backgroundColor = 'white';
+        alertDiv.style.border = '2px solid #ff6666';
+        alertDiv.style.borderRadius = '8px';
+        alertDiv.style.padding = '15px 30px';
+        alertDiv.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+        alertDiv.style.zIndex = '2000';
+        alertDiv.style.textAlign = 'center';
+        alertDiv.style.fontFamily = BUTTON_FONT;
+        alertDiv.style.color = '#333';
+
+        const textDiv = document.createElement('div');
+        textDiv.innerHTML = msg.replace(/\n/g, '<br>');
+        textDiv.style.marginBottom = '15px';
+        textDiv.style.fontSize = '16px';
+        alertDiv.appendChild(textDiv);
+
+        const btn = document.createElement('button');
+        btn.innerText = "OK";
+        btn.style.padding = '8px 25px';
+        btn.style.fontSize = '16px';
+        btn.style.cursor = 'pointer';
+        btn.style.backgroundColor = '#ff6666';
+        btn.style.color = 'white';
+        btn.style.border = 'none';
+        btn.style.borderRadius = '5px';
+        btn.onclick = () => {
+            alertDiv.remove();
+            if (callback) callback(); 
+        };
+        alertDiv.appendChild(btn);
+
+        document.body.appendChild(alertDiv);
+    }
+    
     function createObjectStates(needLog = true) {
         try {
             if (needLog && box1Vectors && box1Vectors.length > 0) {
@@ -153,6 +202,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startSimulation() {
         if (isRunning) return;
+
+        // 合わせ鏡を防ぎつつ作図状態を保存
+        const tempImg = previousAttemptImage; 
+        previousAttemptImage = null;          
+        drawSimulation();                     
+        currentAttemptDataURL = canvas.toDataURL(); 
+        previousAttemptImage = tempImg;
 
         try {
             sendActionLog(1); 
@@ -207,13 +263,44 @@ document.addEventListener('DOMContentLoaded', () => {
         box1.update();
     }
    
-    function drawSimulation() {
+function drawSimulation() {
+        // 1. 背景のクリアと白塗り
         ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        ctx.fillStyle = 'white'; ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        ctx.fillStyle = 'white'; 
+        ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        // 2. ★ 直前の作図スクリーンショットを【最背面】に表示 ★
+        if (previousAttemptImage) {
+            ctx.save(); 
+            ctx.globalAlpha = 0.5; // 半透明にする
+            
+            const scale = 0.37; 
+            const w = SCREEN_WIDTH * scale;
+            const h = SCREEN_HEIGHT * scale;
+            const x = SCREEN_WIDTH - w - 10; 
+            const y = 150; 
+
+            ctx.drawImage(previousAttemptImage, x, y, w, h);
+            
+            ctx.globalAlpha = 1.0; 
+            ctx.strokeStyle = '#ff0000'; 
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, w, h);
+
+            ctx.fillStyle = 'red';
+            ctx.font = "bold 14px 'Meiryo', sans-serif";
+            ctx.fillText("直前の作図", x+35, y - 10);
+            ctx.restore(); 
+        }
+
+        // 3. テキストや物体の描画
         const userName = sessionStorage.getItem('physics_app_username') || "ゲスト";
         ctx.fillStyle = '#555'; ctx.font = "14px 'Meiryo', sans-serif"; ctx.textAlign = "right";
         ctx.fillText(`学習者: ${userName}`, SCREEN_WIDTH - 20, 30); ctx.textAlign = "left"; 
-        ctx.fillStyle = FLOOR_COLOR; ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
+        
+        ctx.fillStyle = FLOOR_COLOR; 
+        ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
+        
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
         ctx.fillText("上から3.0Nの力で押されて床の上で静止している質量1.5kgの緑色の物体にはたらく力を", 10, 25);
         ctx.fillText("すべて作図して再生ボタンを押してみましょう。100gの物体にはたらく力の大きさを１Nとする。", 10, 45);
@@ -530,48 +617,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (allCorrect) { 
-            generalErrorCount = 0; // 正解したらリセット
-            alert("正解です！"); 
-            window.location.href = "main.html"; 
+            generalErrorCount = 0; 
+            showCustomAlert("正解です！", () => {
+                window.location.href = "main.html"; 
+            });
             return true; 
         } else { 
             const userVectors = box1Vectors;
+
+            if (currentAttemptDataURL) {
+                previousAttemptImage = new Image();
+                previousAttemptImage.src = currentAttemptDataURL;
+            }
+
             const centerPos = getTargetPos(box1, 'center');
             const targetNormalPos = getTargetPos(box1, 'bottom+12,-5');
             const topPos = getTargetPos(box1, 'top');
-            // 作用・反作用の混同（下向き3Nと上向き3Nを両方描くミス）を検知
-            // 1. 指が押す力（上面から下向き3N）があるか
+            
             const hasDownwardPush = userVectors.some(v => Math.abs(v.vx*FORCE_SCALE_FACTOR - 0) < 0.2 && Math.abs(v.vy*FORCE_SCALE_FACTOR - 3) < 0.2 && Math.abs(v.startPos.x - (centerPos.x - 12)) < 5.0 && Math.abs(v.startPos.y - (topPos.y + 5)) < 5.0);
             
-            // 2. 指を押し返す力/反作用（上面から上向き3N）があるか
             const hasUpwardPushReaction = userVectors.some(v => Math.abs(v.vx*FORCE_SCALE_FACTOR - 0) < 0.2 && Math.abs(v.vy*FORCE_SCALE_FACTOR - (-3)) < 0.2 && Math.abs(v.startPos.x - (centerPos.x - 12)) < 5.0 && Math.abs(v.startPos.y - (topPos.y + 5)) < 5.0);
 
-            // 両方描かれていたら、専用のアラートを出す
             if (hasDownwardPush && hasUpwardPushReaction) {
-                generalErrorCount = 0; // カウントリセット
-                alert("ヒント：指で押す力（下向き3.0N）と一緒に、上向きの3.0Nの力が描かれていますね。もしかして、物体が指を押し返す力（反作用）を描いていませんか？\n今作図しているのは「緑色の物体」にはたらく力だけです。物体が指を押し返す力は「指」にはたらく力なので、緑色の物体にはたらく力ではありません。");
+                generalErrorCount = 0; 
+
+                showCustomAlert("ヒント：指で押す力（下向き3.0N）と一緒に、上向きの3.0Nの力が描かれていますね。もしかして、物体が指を押し返す力（反作用）を描いていませんか？\n今作図しているのは「緑色の物体」にはたらく力だけです。物体が指を押し返す力は「指」にはたらく力なので、緑色の物体にはたらく力ではありません。");
                 return false;
             }
 
-            // 【特定の誤り：重力18N、垂直抗力18Nの2本のみの組み合わせを検知】
             if (userVectors.length === 2) {
                 const hasGravity18 = userVectors.some(v => Math.abs(v.vx*FORCE_SCALE_FACTOR - 0) < 0.2 && Math.abs(v.vy*FORCE_SCALE_FACTOR - 18) < 0.2 && Math.abs(v.startPos.x - centerPos.x) < 5.0 && Math.abs(v.startPos.y - centerPos.y) < 5.0);
                 const hasNormal18 = userVectors.some(v => Math.abs(v.vx*FORCE_SCALE_FACTOR - 0) < 0.2 && Math.abs(v.vy*FORCE_SCALE_FACTOR - (-18)) < 0.2 && Math.abs(v.startPos.x - targetNormalPos.x) < 5.0 && Math.abs(v.startPos.y - targetNormalPos.y) < 5.0);
 
                 if (hasGravity18 && hasNormal18) {
                     generalErrorCount = 0;
-                    showHintQuizModal(1, true); // ★ 2問連続（ステップ2で終了）のクイズを表示
+                    showHintQuizModal(1, true); 
                     return false;
                 }
             }
 
-            // 【一般的な誤りが続いた場合】
             generalErrorCount++;
             if (generalErrorCount >= 5) {
                 generalErrorCount = 0;
-                showHintQuizModal(1, false); // ★ 3ステップのクイズを開始
+                showHintQuizModal(1, false); 
             } else {
-                alert("不正解です。作図の大きさや向き、位置を見直してみましょう。");
+
+                showCustomAlert("不正解です。作図の大きさや向き、位置を見直してみましょう。");
             }
             return false; 
         }
