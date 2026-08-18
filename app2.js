@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. ★ 直前の作図スクリーンショットを【最背面】に表示 ★
         if (previousAttemptImage) {
             ctx.save(); // 現在の描画状態を保存
-            ctx.globalAlpha = 0.5; // ★ スクショを半透明にして、手前の作図を見やすくする
+            ctx.globalAlpha = 1.0; // ★ スクショを半透明にして、手前の作図を見やすくする
             
             const scale = 0.37; // 縮小表示
             const w = SCREEN_WIDTH * scale;
