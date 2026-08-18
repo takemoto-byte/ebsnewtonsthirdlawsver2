@@ -389,6 +389,25 @@ document.addEventListener('DOMContentLoaded', () => {
     function drawSimulation() {
         ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         ctx.fillStyle = 'white'; ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        // ★ 追加：直前の作図スクリーンショットを表示（右上の学習者名の下あたり）
+        if (previousAttemptImage) {
+            const scale = 0.37; // 縮小表示
+            const w = SCREEN_WIDTH * scale;
+            const h = SCREEN_HEIGHT * scale;
+            const x = SCREEN_WIDTH - w - 10; 
+            const y = 150; 
+
+            ctx.drawImage(previousAttemptImage, x, y, w, h);
+            ctx.strokeStyle = '#ff0000'; // 赤枠で目立たせる
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, w, h);
+
+            ctx.fillStyle = 'red';
+            ctx.font = "bold 14px 'Meiryo', sans-serif";
+            ctx.fillText("直前の作図", x+35, y - 10);
+        }
+        
         const userName = sessionStorage.getItem('physics_app_username') || "ゲスト";
         ctx.fillStyle = '#555'; ctx.font = "14px 'Meiryo', sans-serif"; ctx.textAlign = "right";
         ctx.fillText(`学習者: ${userName}`, SCREEN_WIDTH - 20, 30); ctx.textAlign = "left"; 
@@ -441,23 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
         drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
         drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
 
-        // ★ 追加：直前の作図スクリーンショットを表示（右上の学習者名の下あたり）
-        if (previousAttemptImage) {
-            const scale = 0.37; // 縮小表示
-            const w = SCREEN_WIDTH * scale;
-            const h = SCREEN_HEIGHT * scale;
-            const x = SCREEN_WIDTH - w - 10; 
-            const y = 150; 
 
-            ctx.drawImage(previousAttemptImage, x, y, w, h);
-            ctx.strokeStyle = '#ff0000'; // 赤枠で目立たせる
-            ctx.lineWidth = 2;
-            ctx.strokeRect(x, y, w, h);
-
-            ctx.fillStyle = 'red';
-            ctx.font = "bold 14px 'Meiryo', sans-serif";
-            ctx.fillText("直前の作図", x+35, y - 10);
-        }
     }
 
     // --- ヘルパー関数群 ---
