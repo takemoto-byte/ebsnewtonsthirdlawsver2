@@ -386,12 +386,17 @@ document.addEventListener('DOMContentLoaded', () => {
         box1.update(); box2.update();
     }
     
-    function drawSimulation() {
+function drawSimulation() {
+        // 1. 背景のクリアと白塗り
         ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        ctx.fillStyle = 'white'; ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        ctx.fillStyle = 'white'; 
+        ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        // ★ 追加：直前の作図スクリーンショットを表示（右上の学習者名の下あたり）
+        // 2. ★ 直前の作図スクリーンショットを【最背面】に表示 ★
         if (previousAttemptImage) {
+            ctx.save(); // 現在の描画状態を保存
+            ctx.globalAlpha = 0.5; // ★ スクショを半透明にして、手前の作図を見やすくする
+            
             const scale = 0.37; // 縮小表示
             const w = SCREEN_WIDTH * scale;
             const h = SCREEN_HEIGHT * scale;
@@ -399,19 +404,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const y = 150; 
 
             ctx.drawImage(previousAttemptImage, x, y, w, h);
-            ctx.strokeStyle = '#ff0000'; // 赤枠で目立たせる
+            
+            ctx.globalAlpha = 1.0; // 透明度を元に戻す
+            ctx.strokeStyle = '#ff0000'; // 赤枠
             ctx.lineWidth = 2;
             ctx.strokeRect(x, y, w, h);
 
             ctx.fillStyle = 'red';
             ctx.font = "bold 14px 'Meiryo', sans-serif";
             ctx.fillText("直前の作図", x+35, y - 10);
+            ctx.restore(); // 描画状態を元に戻す
         }
         
+        // 3. テキストや物体の描画（これ以降はすべてスクショの上に描画されます）
         const userName = sessionStorage.getItem('physics_app_username') || "ゲスト";
         ctx.fillStyle = '#555'; ctx.font = "14px 'Meiryo', sans-serif"; ctx.textAlign = "right";
         ctx.fillText(`学習者: ${userName}`, SCREEN_WIDTH - 20, 30); ctx.textAlign = "left"; 
-        ctx.fillStyle = FLOOR_COLOR; ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
+        
+        ctx.fillStyle = FLOOR_COLOR; 
+        ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
+        
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
         ctx.fillText("質量1.0kgの緑色の物体と質量0.50㎏の赤色の物体にはたらく力を作図して", 10, 25);
         ctx.fillText("再生ボタンを押してみましょう。ただし、1.0㎏の物体にはたらく重力の大きさ", 10, 45);
@@ -459,10 +471,8 @@ document.addEventListener('DOMContentLoaded', () => {
         drawButton(ctx, startButtonRect, START_BUTTON_COLOR_IDLE, "再生");
         drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
         drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
-
-
     }
-
+    
     // --- ヘルパー関数群 ---
     function getSnapPoints(box) {
         const rect = box.initialRect; const cx = rect.x + rect.width / 2; const cy = rect.y + rect.height / 2;
