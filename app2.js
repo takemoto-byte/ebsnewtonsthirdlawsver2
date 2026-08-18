@@ -245,14 +245,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
    
     function drawSimulation() {
+        // 1. 背景のクリアと白塗り
         ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        ctx.fillStyle = 'white'; ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        ctx.fillStyle = 'white'; 
+        ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        // 2. ★ 直前の作図スクリーンショットを【最背面】に表示 ★
+        if (previousAttemptImage) {
+            ctx.save(); // 現在の描画状態を保存
+            ctx.globalAlpha = 0.5; // ★ スクショを半透明にして、手前の作図を見やすくする
+            
+            const scale = 0.37; // 縮小表示
+            const w = SCREEN_WIDTH * scale;
+            const h = SCREEN_HEIGHT * scale;
+            const x = SCREEN_WIDTH - w - 10; 
+            const y = 150; 
+
+            ctx.drawImage(previousAttemptImage, x, y, w, h);
+            
+            ctx.globalAlpha = 1.0; // 透明度を元に戻す
+            ctx.strokeStyle = '#ff0000'; // 赤枠で目立たせる
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, w, h);
+
+            ctx.fillStyle = 'red';
+            ctx.font = "bold 14px 'Meiryo', sans-serif";
+            ctx.fillText("直前の作図", x+35, y - 10);
+            ctx.restore(); // 描画状態を元に戻す
+        }
+
+        // 3. テキストや物体の描画（これ以降はすべてスクショの上に描画されます）
         const userName = sessionStorage.getItem('physics_app_username') || "ゲスト";
         ctx.fillStyle = '#555'; ctx.font = "14px 'Meiryo', sans-serif"; ctx.textAlign = "right";
         ctx.fillText(`学習者: ${userName}`, SCREEN_WIDTH - 20, 30); ctx.textAlign = "left"; 
-        ctx.fillStyle = FLOOR_COLOR; ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
+        
+        ctx.fillStyle = FLOOR_COLOR; 
+        ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
+        
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
-        ctx.fillText("床の上に静止している質量1.5kgの緑色の物体にはたらく力をすべて作図して再生ボタンを押して", 10, 25);
+        ctx.fillText("床の上に静止している質量1.5kgの緑色の物体にはたらく力をすべて作図して再生ボタンを押して。", 10, 25);
         ctx.fillText("みましょう。100gの物体にはたらく力の大きさを1.0Nとする。また、灰色の床ははかりになっている。", 10, 45);
 
         box1.draw(ctx);
@@ -286,6 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fillText(`${mag.toFixed(1)} N`, snappedEndPosX + 50, snappedEndPosY -20);
         }
         forceTextStamps.forEach(t => t.draw(ctx));
+        
         if (showMassText) {
             ctx.font = BUTTON_FONT; ctx.fillStyle = 'black'; 
             ctx.fillText(`灰色の床がはかる重さ: ${calculatedMass1.toFixed(2)} kg`, 10, 390);
@@ -295,24 +327,6 @@ document.addEventListener('DOMContentLoaded', () => {
         drawButton(ctx, startButtonRect, START_BUTTON_COLOR_IDLE, "再生");
         drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
         drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
-
-        // 直前の作図スクリーンショットを表示
-        if (previousAttemptImage) {
-            const scale = 0.37; // 縮小表示
-            const w = SCREEN_WIDTH * scale;
-            const h = SCREEN_HEIGHT * scale;
-            const x = SCREEN_WIDTH - w - 10; 
-            const y = 150; 
-
-            ctx.drawImage(previousAttemptImage, x, y, w, h);
-            ctx.strokeStyle = '#ff0000'; // 赤枠で目立たせる
-            ctx.lineWidth = 2;
-            ctx.strokeRect(x, y, w, h);
-
-            ctx.fillStyle = 'red';
-            ctx.font = "bold 14px 'Meiryo', sans-serif";
-            ctx.fillText("直前の作図", x+35, y - 10);
-        }
     }
 
     // --- ヘルパー関数群 ---
