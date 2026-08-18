@@ -8,12 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //  指の画像をロード
     const fingerImage = new Image();
-    fingerImage.src = 'finger.png'; // 指の画像ファイルのパス
+    fingerImage.src = 'finger.png'; 
     let isFingerImageLoaded = false;
 
     fingerImage.onload = () => {
         isFingerImageLoaded = true;
-        drawSimulation(); // 画像読み込み完了後に再描画
+        drawSimulation(); 
     };
     fingerImage.onerror = () => {
         console.error("指の画像をロードできませんでした。'finger.png' が存在し、パスが正しいか確認してください。");
@@ -32,21 +32,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- ボタン設定 (3つ並べる) ---
     const buttonWidth = 100, buttonHeight = 40;
-    const buttonGap = 50; // ボタン間の隙間
+    const buttonGap = 50; 
     
-    // 3つのボタン全体の幅
     const totalButtonWidth = (buttonWidth * 3) + (buttonGap * 2);
-    // 左端の開始位置
     const startButtonBaseX = (SCREEN_WIDTH - totalButtonWidth) / 2;
     const buttonY = SCREEN_HEIGHT - buttonHeight - 20;
 
-    // 各ボタンの矩形定義
     const startButtonRect = { x: startButtonBaseX, y: buttonY, width: buttonWidth, height: buttonHeight };
     const undoButtonRect  = { x: startButtonBaseX + buttonWidth + buttonGap, y: buttonY, width: buttonWidth, height: buttonHeight };
     const resetButtonRect = { x: startButtonBaseX + (buttonWidth + buttonGap) * 2, y: buttonY, width: buttonWidth, height: buttonHeight };
     
     const START_BUTTON_COLOR_IDLE = '#90EE90'; 
-    const UNDO_BUTTON_COLOR_IDLE  = '#FFD700'; // 黄色
+    const UNDO_BUTTON_COLOR_IDLE  = '#FFD700'; 
     const RESET_BUTTON_COLOR_IDLE = '#ADD8E6'; 
     const BUTTON_FONT = "bold 18px 'Meiryo', sans-serif";
     const INSTRUCTION_FONT = "16px 'Meiryo', sans-serif";
@@ -56,14 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const APP_ID = 3;
 
     // --- 正解データ設定 ---
-    // 質量1.5kg, 上から3.0Nの力
     const CORRECT_ANSWERS = [
         {
             objectId: 'box1', 
             vectors: [
-                { name: "重力", fx: 0, fy: 15, startPosType: 'center' },       // 15N
-                { name: "指で押す力", fx: 0, fy: 3, startPosType: 'top-12,5' },     // 3N (下向き)
-                { name: "床からの垂直抗力", fx: 0, fy: -18, startPosType: 'bottom+12,-5' }, // 18N (上向き)
+                { name: "重力", fx: 0, fy: 15, startPosType: 'center' },       
+                { name: "指で押す力", fx: 0, fy: 3, startPosType: 'top-12,5' },     
+                { name: "床からの垂直抗力", fx: 0, fy: -18, startPosType: 'bottom+12,-5' }, 
             ]
         }
     ];
@@ -83,8 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let calculatedMass1 = 0.0;
     let showMassText = false;
     
-    let generalErrorCount = 0; // エラーカウント変数
+    let generalErrorCount = 0; 
 
+    // スクリーンショット保存用変数
     let currentAttemptDataURL = null; 
     let previousAttemptImage = null;
 
@@ -253,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const isCorrect = checkAnswer(); 
             if (!isCorrect) {
                 isRunning = false;
-                createObjectStates(false);
+                // 即時リセットは削除。OKボタンが押された後に行う
             }
         }, 1000); 
     }
@@ -263,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
         box1.update();
     }
    
-function drawSimulation() {
+    function drawSimulation() {
         // 1. 背景のクリアと白塗り
         ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         ctx.fillStyle = 'white'; 
@@ -427,7 +424,6 @@ function drawSimulation() {
     }
 
     // --- ★ヒントクイズ生成関数（完全版） ---
-    // isSpecificError が true の場合は2問目（ステップ2）で終了する
     function showHintQuizModal(step, isSpecificError = false) {
         const existing = document.getElementById('hintModal');
         if (existing) existing.remove();
@@ -483,7 +479,6 @@ function drawSimulation() {
                 btn.style.padding = '12px'; btn.style.fontSize = '16px'; btn.style.cursor = 'pointer';
                 btn.onclick = () => {
                     if (opt.correct) {
-                        // ★特定エラーでも通常でも、正解したら必ずステップ2へ進む！
                         alert("正解！物体には下向きの「重力」と「指から受ける力」、そして上向きに「垂直抗力」の3つがはたらいています。\n続いて、力の大きさについて考えてみよう！");
                         showHintQuizModal(2, isSpecificError); 
                     } else {
@@ -511,12 +506,11 @@ function drawSimulation() {
                 btn.style.padding = '12px'; btn.style.fontSize = '16px'; btn.style.cursor = 'pointer';
                 btn.onclick = () => {
                     if (opt.correct) {
-                        // ★特定エラー（18N・18Nのミス）の場合は、ここで作図に戻す！
                         if (isSpecificError) {
                             alert("大正解！\n1.5kg = 1500g だから、重力は 15N になるね。\n力の種類と大きさがわかりましたね！それではもう一度気をつけて力を作図してみよう！");
-                            modal.remove(); 
+                            modal.remove();
+                            createObjectStates(false); // クイズ終了後にリセット
                         } else {
-                            // 通常の5回ミスの場合は、最後のステップ3へ進む
                             alert("大正解！\n1.5kg = 1500g だから、重力は 15N になるね。\nそれでは、最後のステップで床からの力を考えてみよう！");
                             showHintQuizModal(3, isSpecificError); 
                         }
@@ -546,7 +540,8 @@ function drawSimulation() {
                 btn.onclick = () => {
                     if (opt.correct) {
                         alert("大正解！\n下向きの力の合計（重力15N + 指の力3N = 18N）と、上向きの垂直抗力がつり合います。\nつまり垂直抗力は18Nになりますね。それではもう一度力を作図してみよう！");
-                        modal.remove(); 
+                        modal.remove();
+                        createObjectStates(false); // クイズ終了後にリセット
                     } else {
                         alert("惜しい！\n" + opt.msg + "\n物体が静止しているとき、力はつり合っています。");
                     }
@@ -640,8 +635,9 @@ function drawSimulation() {
 
             if (hasDownwardPush && hasUpwardPushReaction) {
                 generalErrorCount = 0; 
-
-                showCustomAlert("ヒント：指で押す力（下向き3.0N）と一緒に、上向きの3.0Nの力が描かれていますね。もしかして、物体が指を押し返す力（反作用）を描いていませんか？\n今作図しているのは「緑色の物体」にはたらく力だけです。物体が指を押し返す力は「指」にはたらく力なので、緑色の物体にはたらく力ではありません。");
+                showCustomAlert("ヒント：指で押す力（下向き3.0N）と一緒に、上向きの3.0Nの力が描かれていますね。もしかして、物体が指を押し返す力（反作用）を描いていませんか？\n今作図しているのは「緑色の物体」にはたらく力だけです。物体が指を押し返す力は「指」にはたらく力なので、緑色の物体にはたらく力ではありません。", () => {
+                    createObjectStates(false); // OKを押した後にリセット
+                });
                 return false;
             }
 
@@ -661,8 +657,9 @@ function drawSimulation() {
                 generalErrorCount = 0;
                 showHintQuizModal(1, false); 
             } else {
-
-                showCustomAlert("不正解です。作図の大きさや向き、位置を見直してみましょう。");
+                showCustomAlert("不正解です。作図の大きさや向き、位置を見直してみましょう。", () => {
+                    createObjectStates(false); // OKを押した後にリセット
+                });
             }
             return false; 
         }
