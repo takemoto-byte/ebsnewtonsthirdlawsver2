@@ -89,13 +89,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let box2Vectors = [];
     let forceTextStamps = [];
     
-    // ★操作履歴スタック (戻るボタン用)
+    // 履歴スタック (戻るボタン用)
     // 中身: 'box1' または 'box2' の文字列を入れて、どの配列に追加したかを記録する
     let actionHistory = [];
 
     let calculatedMass1 = 0.0, calculatedMass2 = 0.0;
     let showMassText = false;
 
+    // スクリショ保存用変数
+    let currentAttemptDataURL = null; 
+    let previousAttemptImage = null;
     // --- クラス定義 ---
     class PhysicsObject {
         constructor(x, y, w, h, m, c) {
@@ -127,7 +130,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- メインロジック ---
-    
+    //  カスタムアラート関数（画面を暗くしない） 
+    function showCustomAlert(msg, callback) {
+        const existing = document.getElementById('customAlert');
+        if (existing) existing.remove();
+
+        const alertDiv = document.createElement('div');
+        alertDiv.id = 'customAlert';
+        alertDiv.style.position = 'fixed';
+        alertDiv.style.top = '20px'; // 画面上部から表示
+        alertDiv.style.left = '50%';
+        alertDiv.style.transform = 'translateX(-50%)';
+        alertDiv.style.backgroundColor = 'white';
+        alertDiv.style.border = '2px solid #ff6666';
+        alertDiv.style.borderRadius = '8px';
+        alertDiv.style.padding = '15px 30px';
+        alertDiv.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+        alertDiv.style.zIndex = '2000';
+        alertDiv.style.textAlign = 'center';
+        alertDiv.style.fontFamily = BUTTON_FONT;
+        alertDiv.style.color = '#333';
+
+        const textDiv = document.createElement('div');
+        textDiv.innerHTML = msg.replace(/\n/g, '<br>');
+        textDiv.style.marginBottom = '15px';
+        textDiv.style.fontSize = '16px';
+        alertDiv.appendChild(textDiv);
+
+        const btn = document.createElement('button');
+        btn.innerText = "OK";
+        btn.style.padding = '8px 25px';
+        btn.style.fontSize = '16px';
+        btn.style.cursor = 'pointer';
+        btn.style.backgroundColor = '#ff6666';
+        btn.style.color = 'white';
+        btn.style.border = 'none';
+        btn.style.borderRadius = '5px';
+        btn.onclick = () => {
+            alertDiv.remove();
+            if (callback) callback(); // OKボタンを押した後の処理（画面遷移など）
+        };
+        alertDiv.appendChild(btn);
+
+        document.body.appendChild(alertDiv);
+    }    
+
     // オブジェクト状態の初期化
     function createObjectStates(needLog = true) {
         // リセットログ送信
@@ -183,6 +230,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startSimulation() {
         if (isRunning) return;
+
+        // 合わせ鏡（スクショの中にスクショが写り込む）を防ぐ処理
+        const tempImg = previousAttemptImage; // 前回のスクショを一時退避
+        previousAttemptImage = null;          // 一旦非表示にする
+        drawSimulation();                     // スクショがない状態のキャンバスを再描画
+        currentAttemptDataURL = canvas.toDataURL(); // 純粋な作図だけをキャプチャ！
+        previousAttemptImage = tempImg;       // スクショの表示を元に戻す
 
         // 再生ログ送信
         try {
@@ -280,11 +334,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (totalSessionErrors.hasOwnProperty(id)) totalSessionErrors[id]++; else totalSessionErrors[id] = 1;
         });
 
+        // ★ 不正解が確定したので、一時保存したスクショを「前回作図」としてセット
+        if (currentAttemptDataURL) {
+            previousAttemptImage = new Image();
+            previousAttemptImage.src = currentAttemptDataURL;
+        }
+
         if (attemptCount >= MAX_ATTEMPTS) {
             analyzeAndRedirect();
         } else {
             const remaining = MAX_ATTEMPTS - attemptCount;
-            alert(`不正解です。\nあと${remaining}回間違えると、この問題を考えるためのヒントとなる補助問題へ移動します。`);
+            // ★ alert を showCustomAlert に変更
+            showCustomAlert(`不正解です。\nあと${remaining}回間違えると、この問題を考えるためのヒントとなる補助問題へ移動します。`);
             createObjectStates(false); // 不正解リセット（ログなし）
         }
     }
@@ -292,9 +353,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function analyzeAndRedirect() {
         const errorIds = Object.keys(missingVectorCounts);
         if (errorIds.length === 0) {
-            alert("余計な力が描かれています。基礎から復習しましょう。");
-            sessionStorage.setItem('has_visited_sub', 'true'); // ★フラグを保存
-            window.location.href = "index2.html";
+            // ★ alert を showCustomAlert に変更（OKを押した後に遷移）
+            showCustomAlert("余計な力が描かれています。基礎から復習しましょう。", () => {
+                sessionStorage.setItem('has_visited_sub', 'true');
+                window.location.href = "index2.html";
+            });
             return;
         }
         errorIds.sort((a, b) => {
@@ -310,11 +373,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         try { sendToGoogleSheet(false); } catch(e) { console.error(e); }
 
-        sessionStorage.setItem('has_visited_sub', 'true'); // ★フラグを保存
+        sessionStorage.setItem('has_visited_sub', 'true'); 
         
-        // ★メッセージの「3回」を、現在のMAX_ATTEMPTS（3回か5回）に合わせて自動で変わるように修正
-        alert(`${MAX_ATTEMPTS}回不正解となりました。\n適した補助問題へ移動します。`);
-        window.location.href = destination;
+        // ★ alert を showCustomAlert に変更
+        showCustomAlert(`${MAX_ATTEMPTS}回不正解となりました。\n適した補助問題へ移動します。`, () => {
+            window.location.href = destination;
+        });
     }
 
     function updateSimulation() {
@@ -330,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillText(`学習者: ${userName}`, SCREEN_WIDTH - 20, 30); ctx.textAlign = "left"; 
         ctx.fillStyle = FLOOR_COLOR; ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
-        ctx.fillText("質量1.0kgの緑色の物体と質量0.50㎏の赤色の物体にはたらく力をすべて作図して", 10, 25);
+        ctx.fillText("質量1.0kgの緑色の物体と質量0.50㎏の赤色の物体にはたらく力を作図して", 10, 25);
         ctx.fillText("再生ボタンを押してみましょう。ただし、1.0㎏の物体にはたらく重力の大きさ", 10, 45);
         ctx.fillText("を10Nとする。また、灰色の床と緑色の物体の上面ははかりになっている。", 10, 65);
         
@@ -376,6 +440,24 @@ document.addEventListener('DOMContentLoaded', () => {
         drawButton(ctx, startButtonRect, START_BUTTON_COLOR_IDLE, "再生");
         drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
         drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
+
+        // ★ 追加：直前の作図スクリーンショットを表示（右上の学習者名の下あたり）
+        if (previousAttemptImage) {
+            const scale = 0.37; // 縮小表示
+            const w = SCREEN_WIDTH * scale;
+            const h = SCREEN_HEIGHT * scale;
+            const x = SCREEN_WIDTH - w - 10; 
+            const y = 150; 
+
+            ctx.drawImage(previousAttemptImage, x, y, w, h);
+            ctx.strokeStyle = '#ff0000'; // 赤枠で目立たせる
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, w, h);
+
+            ctx.fillStyle = 'red';
+            ctx.font = "bold 14px 'Meiryo', sans-serif";
+            ctx.fillText("直前の作図", x+35, y - 10);
+        }
     }
 
     // --- ヘルパー関数群 ---
