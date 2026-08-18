@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. ★ 直前の作図スクリーンショットを【最背面】に表示 ★
         if (previousAttemptImage) {
             ctx.save(); 
-            ctx.globalAlpha = 0.5; // 半透明にする
+            ctx.globalAlpha = 1.0; // 半透明にする
             
             const scale = 0.37; 
             const w = SCREEN_WIDTH * scale;
