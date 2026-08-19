@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const checkResult = checkAnswerDetails(); 
             if (checkResult.isCorrect) {
                 try { sendToGoogleSheet(true); } catch(e) { console.error(e); }
-                setTimeout(() => { window.location.replace = "end.html"; }, 500);
+                setTimeout(() => { window.location.replace("end.html"); }, 500);
             } else {
                 handleIncorrect(checkResult.missingIds);
                 isRunning = false;
@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // ★ alert を showCustomAlert に変更（OKを押した後に遷移）
             showCustomAlert("余計な力が描かれています。基礎から復習しましょう。", () => {
                 sessionStorage.setItem('has_visited_sub', 'true');
-                window.location.replace = "index2.html";
+                window.location.replace("index2.html");
             });
             return;
         }
@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // ★ alert を showCustomAlert に変更
         showCustomAlert(`${MAX_ATTEMPTS}回不正解となりました。\n適した補助問題へ移動します。`, () => {
-            window.location.replace = destination;
+            window.location.replace(destination);
         });
     }
 
