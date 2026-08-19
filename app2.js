@@ -572,7 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
             generalErrorCount = 0; // 正解したらリセット
             // ★ alert を showCustomAlert に変更
             showCustomAlert("正解です！次の補助問題に移行します。", () => {
-                window.location.replace = "index3.html"; 
+                window.location.replace("index3.html"); 
             });
             return true; 
         } else { 
