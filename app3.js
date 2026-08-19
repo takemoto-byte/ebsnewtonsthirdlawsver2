@@ -299,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
         
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
-        ctx.fillText("上から3.0Nの力で押されて床の上で静止している質量1.5kgの緑色の物体にはたらく力を", 10, 25);
+        ctx.fillText("指で上から3.0Nの力で押されて床の上で静止している質量1.5kgの緑色の物体にはたらく力を", 10, 25);
         ctx.fillText("すべて作図して再生ボタンを押してみましょう。100gの物体にはたらく力の大きさを１Nとする。", 10, 45);
         ctx.fillText("また、灰色の床ははかりになっている。", 10, 65);
 
@@ -614,7 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (allCorrect) { 
             generalErrorCount = 0; 
             showCustomAlert("正解です！", () => {
-                window.location.href = "main.html"; 
+                window.location.replace = "main.html"; 
             });
             return true; 
         } else { 
