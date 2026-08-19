@@ -614,7 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (allCorrect) { 
             generalErrorCount = 0; 
             showCustomAlert("正解です！", () => {
-                window.location.replace = "main.html"; 
+                window.location.replace("main.html");
             });
             return true; 
         } else { 
