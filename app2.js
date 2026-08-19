@@ -607,7 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (hasCorrectGravity && hasUpwardForceFromCenter) {
                 generalErrorCount = 0; 
                 // ★ alert を showCustomAlert に変更
-                showCustomAlert("ヒント：はたらいている力の大きさと向きはいいですね！上向きの力は物体の中心からはたらくのであってますか？上向きの力は何という力かも思い出してもう一度作図しましょう！");
+                showCustomAlert("ヒント：はたらいている力の大きさと向きはいいですね！上向きの力は物体の中心からはたらきますか？上向きの力は何という力かも思い出してもう一度作図しましょう！");
                 return false;
             }
 
@@ -629,7 +629,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (hasCorrectNormalForce && hasDownwardForceFromBottom) {
                 generalErrorCount = 0; 
                 // ★ alert を showCustomAlert に変更
-                showCustomAlert("ヒント：はたらいている力の大きさと向きはいいですね！下向きの力は床との接触面からはたらくのであってますか？下向きの力は何という力かも思い出してもう一度作図しましょう！");
+                showCustomAlert("ヒント：はたらいている力の大きさと向きはいいですね！下向きの力は床との接触面からはたらきますか？下向きの力は何という力かも思い出してもう一度作図しましょう！");
                 return false;
             }
 
