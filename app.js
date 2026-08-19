@@ -340,13 +340,24 @@ document.addEventListener('DOMContentLoaded', () => {
             previousAttemptImage.src = currentAttemptDataURL;
         }
 
-        if (attemptCount >= MAX_ATTEMPTS) {
-            analyzeAndRedirect();
+        // ★ 追加：すでに補助問題を訪問したかどうかのチェック
+        const hasVisitedSub = sessionStorage.getItem('has_visited_sub') === 'true';
+
+        if (hasVisitedSub) {
+            // 【補助問題から戻ってきた後】何度間違えても移動させず、ここで粘らせる
+            showCustomAlert("不正解です。\n補助問題で確認したことを思い出して、もう一度作図を見直してみましょう！", () => {
+                createObjectStates(false); // リセットのみ行う
+            });
         } else {
-            const remaining = MAX_ATTEMPTS - attemptCount;
-            // ★ alert を showCustomAlert に変更
-            showCustomAlert(`不正解です。\nあと${remaining}回間違えると、この問題を考えるためのヒントとなる補助問題へ移動します。`);
-            createObjectStates(false); // 不正解リセット（ログなし）
+            // 【初回】まだ補助問題に行っていない場合
+            if (attemptCount >= MAX_ATTEMPTS) {
+                analyzeAndRedirect();
+            } else {
+                const remaining = MAX_ATTEMPTS - attemptCount;
+                showCustomAlert(`不正解です。\nあと${remaining}回間違えると、この問題を考えるためのヒントとなる補助問題へ移動します。`, () => {
+                    createObjectStates(false); 
+                });
+            }
         }
     }
 
