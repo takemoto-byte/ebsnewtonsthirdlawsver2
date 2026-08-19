@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const checkResult = checkAnswerDetails(); 
             if (checkResult.isCorrect) {
                 try { sendToGoogleSheet(true); } catch(e) { console.error(e); }
-                setTimeout(() => { window.location.href = "end.html"; }, 500);
+                setTimeout(() => { window.location.replace = "end.html"; }, 500);
             } else {
                 handleIncorrect(checkResult.missingIds);
                 isRunning = false;
@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // ★ alert を showCustomAlert に変更（OKを押した後に遷移）
             showCustomAlert("余計な力が描かれています。基礎から復習しましょう。", () => {
                 sessionStorage.setItem('has_visited_sub', 'true');
-                window.location.href = "index2.html";
+                window.location.replace = "index2.html";
             });
             return;
         }
@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // ★ alert を showCustomAlert に変更
         showCustomAlert(`${MAX_ATTEMPTS}回不正解となりました。\n適した補助問題へ移動します。`, () => {
-            window.location.href = destination;
+            window.location.replace = destination;
         });
     }
 
@@ -436,7 +436,7 @@ function drawSimulation() {
         ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
         
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
-        ctx.fillText("質量1.0kgの緑色の物体と質量0.50㎏の赤色の物体にはたらく力を作図して", 10, 25);
+        ctx.fillText("質量1.0kgの緑色の物体と質量0.50㎏の赤色の物体にはたらく力をすべて作図して", 10, 25);
         ctx.fillText("再生ボタンを押してみましょう。ただし、1.0㎏の物体にはたらく重力の大きさ", 10, 45);
         ctx.fillText("を10Nとする。また、灰色の床と緑色の物体の上面ははかりになっている。", 10, 65);
         
