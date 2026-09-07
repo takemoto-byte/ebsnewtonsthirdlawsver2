@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const BUTTON_FONT = "bold 18px 'Meiryo', sans-serif";
     const INSTRUCTION_FONT = "16px 'Meiryo', sans-serif";
 
-    // --- ★ログ設定（ここに入力してください） ---
+    // ログ設定（ここに入力してください）
     const ACTION_LOG_URL = "https://script.google.com/macros/s/AKfycbyEY0cnE-qSG1KH3UUXpaEmbu4OLATEz9Rd3rIcR2omKeKROYsHdYAVFMC_CBVVnDh1qg/exec"; 
     const APP_ID = 2;
 
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function startSimulation() {
         if (isRunning) return;
 
-        // ★ 追加：合わせ鏡を防ぎつつ作図状態を保存
+        // 追加：合わせ鏡を防ぎつつ作図状態を保存
         const tempImg = previousAttemptImage; 
         previousAttemptImage = null;          
         drawSimulation();                     
@@ -250,10 +250,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = 'white'; 
         ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        // 2. ★ 直前の作図スクリーンショットを【最背面】に表示 ★
+        // 2. 直前の作図スクリーンショットを【最背面】に表示
         if (previousAttemptImage) {
             ctx.save(); // 現在の描画状態を保存
-            ctx.globalAlpha = 1.0; // ★ スクショを半透明にして、手前の作図を見やすくする
+            ctx.globalAlpha = 1.0; // スクショを半透明にして、手前の作図を見やすくする
             
             const scale = 0.37; // 縮小表示
             const w = SCREEN_WIDTH * scale;
@@ -403,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fill();
         });
     }
-    // --- ★ヒントクイズ生成関数 ---
+    // ヒントクイズ生成関数
     function showHintQuizModal(step) {
         // 既存のモーダルがあれば削除
         const existing = document.getElementById('hintModal');
