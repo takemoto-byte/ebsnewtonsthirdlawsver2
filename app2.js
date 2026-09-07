@@ -633,15 +633,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 return false;
             }
 
-            // --- ★上記以外の一般的な誤りが続いた場合の処理 ---
+            // 上記以外の一般的な誤りが続いた場合の処理 ---
             generalErrorCount++;
             
             if (generalErrorCount >= 5) {
                 generalErrorCount = 0; 
                 showHintQuizModal(1);  
             } else {
-                // ★ alert を showCustomAlert に変更
-                showCustomAlert("不正解です。作図の大きさや向き、位置を見直してみましょう。"); 
+                // alert を showCustomAlert に変更
+                showCustomAlert("不正解です。作図の大きさや向き、位置を見直してもう一度してみましょう。"); 
             }
             return false; 
         }
