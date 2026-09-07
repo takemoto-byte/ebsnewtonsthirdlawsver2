@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const BUTTON_FONT = "bold 18px 'Meiryo', sans-serif";
     const INSTRUCTION_FONT = "16px 'Meiryo', sans-serif";
 
-    // --- ★ログ設定（ここに入力してください） ---
+    // ログ設定
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbymGS9vU-xHbfOrd8tHfyISyLSl3g1EI47OvQjqRDg94iX9ITwhAKvSOoujCQahLYuVEg/exec"; 
     const ACTION_LOG_URL = "https://script.google.com/macros/s/AKfycbyEY0cnE-qSG1KH3UUXpaEmbu4OLATEz9Rd3rIcR2omKeKROYsHdYAVFMC_CBVVnDh1qg/exec"; 
     const APP_ID = 1;
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
         calculatedMass1 = 0.0; calculatedMass2 = 0.0;
     }
 
-    // ★ 1つ戻る処理
+    // 1つ戻る処理
     function undoLastAction() {
         if (actionHistory.length === 0) return; // 履歴がなければ何もしない
 
@@ -334,13 +334,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (totalSessionErrors.hasOwnProperty(id)) totalSessionErrors[id]++; else totalSessionErrors[id] = 1;
         });
 
-        // ★ 不正解が確定したので、一時保存したスクショを「前回作図」としてセット
+        // 不正解が確定したので、一時保存したスクショを「前回作図」としてセット
         if (currentAttemptDataURL) {
             previousAttemptImage = new Image();
             previousAttemptImage.src = currentAttemptDataURL;
         }
 
-        // ★ 追加：すでに補助問題を訪問したかどうかのチェック
+        // 追加：すでに補助問題を訪問したかどうかのチェック
         const hasVisitedSub = sessionStorage.getItem('has_visited_sub') === 'true';
 
         if (hasVisitedSub) {
@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function analyzeAndRedirect() {
         const errorIds = Object.keys(missingVectorCounts);
         if (errorIds.length === 0) {
-            // ★ alert を showCustomAlert に変更（OKを押した後に遷移）
+            // alert を showCustomAlert に変更（OKを押した後に遷移）
             showCustomAlert("余計な力が描かれています。基礎から復習しましょう。", () => {
                 sessionStorage.setItem('has_visited_sub', 'true');
                 window.location.replace("index2.html");
@@ -386,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         sessionStorage.setItem('has_visited_sub', 'true'); 
         
-        // ★ alert を showCustomAlert に変更
+        // alert を showCustomAlert に変更
         showCustomAlert(`${MAX_ATTEMPTS}回不正解となりました。\n適した補助問題へ移動します。`, () => {
             window.location.replace(destination);
         });
@@ -403,10 +403,10 @@ function drawSimulation() {
         ctx.fillStyle = 'white'; 
         ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        // 2. ★ 直前の作図スクリーンショットを【最背面】に表示 ★
+        // 2. 直前の作図スクリーンショットを【最背面】に表示 
         if (previousAttemptImage) {
             ctx.save(); // 現在の描画状態を保存
-            ctx.globalAlpha = 1.0; // ★ スクショを半透明にして、手前の作図を見やすくする
+            ctx.globalAlpha = 1.0; // スクショを半透明にして、手前の作図を見やすくする
             
             const scale = 0.37; // 縮小表示
             const w = SCREEN_WIDTH * scale;
