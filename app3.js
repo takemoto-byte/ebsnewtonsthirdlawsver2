@@ -652,6 +652,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            if (userVectors.length === 3) {
+                // それぞれの力が特定の誤差範囲内で描かれているかを判定
+                const hasGravity15 = userVectors.some(v => Math.abs(v.vx*FORCE_SCALE_FACTOR - 0) < 0.2 && Math.abs(v.vy*FORCE_SCALE_FACTOR - 15) < 0.2 && Math.abs(v.startPos.x - centerPos.x) < 5.0 && Math.abs(v.startPos.y - centerPos.y) < 5.0);
+                const hasPush3 = userVectors.some(v => Math.abs(v.vx*FORCE_SCALE_FACTOR - 0) < 0.2 && Math.abs(v.vy*FORCE_SCALE_FACTOR - 3) < 0.2 && Math.abs(v.startPos.x - (centerPos.x - 12)) < 5.0 && Math.abs(v.startPos.y - (topPos.y + 5)) < 5.0);
+                const hasNormal15 = userVectors.some(v => Math.abs(v.vx*FORCE_SCALE_FACTOR - 0) < 0.2 && Math.abs(v.vy*FORCE_SCALE_FACTOR - (-15)) < 0.2 && Math.abs(v.startPos.x - targetNormalPos.x) < 5.0 && Math.abs(v.startPos.y - targetNormalPos.y) < 5.0);
+
+                if (hasGravity15 && hasPush3 && hasNormal15) {
+                    generalErrorCount = 0; // 専用フィードバックを出した場合は一般的なエラーカウントをリセット
+                    showCustomAlert("ヒント：重力（15.0N）と指で押す力（3.0N）は正しく描けています！\nしかし、上向きの垂直抗力が15.0Nになっていますね。物体は下向きに合計何Nの力を受けているでしょうか？\nこれをふまえてもう一度作図してみましょう！", () => {
+                        createObjectStates(false);
+                    });
+                    return false;
+                }
+            }
+            
             generalErrorCount++;
             if (generalErrorCount >= 5) {
                 generalErrorCount = 0;
