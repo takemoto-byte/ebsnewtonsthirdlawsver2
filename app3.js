@@ -48,11 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const BUTTON_FONT = "bold 18px 'Meiryo', sans-serif";
     const INSTRUCTION_FONT = "16px 'Meiryo', sans-serif";
 
-    // --- ★ログ設定 ---
+    // ログ設定 
     const ACTION_LOG_URL = "https://script.google.com/macros/s/AKfycbyEY0cnE-qSG1KH3UUXpaEmbu4OLATEz9Rd3rIcR2omKeKROYsHdYAVFMC_CBVVnDh1qg/exec"; 
     const APP_ID = 3;
 
-    // --- 正解データ設定 ---
+    // 正解データ設定
     const CORRECT_ANSWERS = [
         {
             objectId: 'box1', 
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = 'white'; 
         ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        // 2. ★ 直前の作図スクリーンショットを【最背面】に表示 ★
+        // 2.  直前の作図スクリーンショットを【最背面】に表示 
         if (previousAttemptImage) {
             ctx.save(); 
             ctx.globalAlpha = 1.0; // 半透明にする
@@ -423,7 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- ★ヒントクイズ生成関数（完全版） ---
+    // ヒントクイズ生成関数（完全版） 
     function showHintQuizModal(step, isSpecificError = false) {
         const existing = document.getElementById('hintModal');
         if (existing) existing.remove();
@@ -657,7 +657,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 generalErrorCount = 0;
                 showHintQuizModal(1, false); 
             } else {
-                showCustomAlert("不正解です。作図の大きさや向き、位置を見直してみましょう。", () => {
+                showCustomAlert("不正解です。作図の大きさや向き、位置を見直してもう一度してみましょう。", () => {
                     createObjectStates(false); // OKを押した後にリセット
                 });
             }
@@ -665,7 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- ★ログ送信関数 (エラー対策済み) ---
+    // ログ送信関数 (エラー対策済み)
     function sendActionLog(actionType) {
         try {
             const consent = sessionStorage.getItem('physics_app_consent');
