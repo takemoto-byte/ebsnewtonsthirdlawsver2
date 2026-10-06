@@ -641,7 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 showHintQuizModal(1);  
             } else {
                 // alert を showCustomAlert に変更
-                showCustomAlert("不正解です。作図の大きさや向き、位置を見直してもう一度してみましょう。"); 
+                showCustomAlert("不正解です。作図の大きさや向き、位置を見直してもう一度作図してみましょう。"); 
             }
             return false; 
         }
