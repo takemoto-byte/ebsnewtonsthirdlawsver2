@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 analyzeAndRedirect();
             } else {
                 const remaining = MAX_ATTEMPTS - attemptCount;
-                showCustomAlert(`不正解です。\nあと${remaining}回間違えると、この問題を考えるためのヒントとなる補助問題へ移動します。`, () => {
+                showCustomAlert(`間違いです。\nあと${remaining}回間違えると、この問題を考えるためのヒントとなる補助問題へ移動します。`, () => {
                     createObjectStates(false); 
                 });
             }
