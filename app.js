@@ -548,13 +548,13 @@ function drawSimulation() {
             case 'right': basePos = { x: r.x + r.width, y: cy }; break; default: basePos = { x: cx, y: cy }; break;
         } return { x: basePos.x + offsetX, y: basePos.y + offsetY };
     }
-    // 作用点（スナップポイント）に半透明の円を描画する関数
+    // 作用点に半透明の円を描画する関数
     function drawSnapPoints(ctx, box, color) {
         const snapPoints = getSnapPoints(box);
         ctx.fillStyle = color;
         snapPoints.forEach(p => {
             ctx.beginPath();
-            ctx.arc(p.x, p.y, 8, 0, Math.PI * 2); // 半径8の円を描画（大きさは好みで調整してください）
+            ctx.arc(p.x, p.y, 8, 0, Math.PI * 2); // 半径8の円を描画
             ctx.fill();
         });
     }
