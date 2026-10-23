@@ -635,6 +635,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (hasDownwardPush && hasUpwardPushReaction) {
                 generalErrorCount = 0; 
+                sendActionLog("2-3")
                 showCustomAlert("ヒント：指で押す力と一緒に、上向きの力が描かれていますね。もしかして、物体が指を押し返す力（反作用）を描いていませんか？\n今作図しているのは「緑色の物体」にはたらく力だけです。物体が指を押す力は「指」にはたらく力なので、緑色の物体にはたらく力ではありません。これをふまえてもう一度考えてみましょう。", () => {
                     createObjectStates(false); // OKを押した後にリセット
                 });
@@ -647,6 +648,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (hasGravity18 && hasNormal18) {
                     generalErrorCount = 0;
+                    sendActionLog("2-4")
                     showHintQuizModal(1, true); 
                     return false;
                 }
@@ -660,6 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (hasGravity15 && hasPush3 && hasNormal15) {
                     generalErrorCount = 0; // 専用フィードバックを出した場合は一般的なエラーカウントをリセット
+                    sendActionLog("2-2")
                     showCustomAlert("ヒント：はたらく力の種類はあっています。しかし、物体が床にめり込みましたね。床にめり込まないためにはどうなればいいかを考えてもう一度作図してみましょう。", () => {
                         createObjectStates(false);
                     });
@@ -670,6 +673,7 @@ document.addEventListener('DOMContentLoaded', () => {
             generalErrorCount++;
             if (generalErrorCount >= 5) {
                 generalErrorCount = 0;
+                sendActionLog("2-5")
                 showHintQuizModal(1, false); 
             } else {
                 showCustomAlert("不正解です。作図の大きさや向き、位置を見直してもう一度作図してみましょう。", () => {
