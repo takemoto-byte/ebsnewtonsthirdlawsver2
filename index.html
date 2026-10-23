@@ -27,7 +27,7 @@
         function startGame() {
             const nameInput = document.getElementById('username-input');
             const name = nameInput.value.trim();
-            // ★追加: チェックボックスの状態を取得
+            // チェックボックスの状態を取得
             const isConsented = document.getElementById('consent-check').checked;
 
             if (name === "") {
@@ -38,9 +38,10 @@
             // 名前を保存
             sessionStorage.setItem('physics_app_username', name);
             
-            // ★追加: 同意状態を保存 ('true' または 'false' という文字で保存されます)
+            // 同意状態を保存 ('true' または 'false' という文字で保存されます)
             sessionStorage.setItem('physics_app_consent', isConsented);
-
+            // ボタンを押した瞬間の時刻を「スタート時間」として保存
+            sessionStorage.setItem('physics_app_starttime', Date.now());
             // メインの問題へ移動
             window.location.replace("main.html");
         }
