@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const INSTRUCTION_FONT = "16px 'Meiryo', sans-serif";
 
     // ログ設定 
-    const ACTION_LOG_URL = "https://script.google.com/macros/s/AKfycbwIAZivB3srx3SrP6ZfN2zWYHerD5fqfBLx92pyxbgjWNtJXFiRAHC8b3d5cAPeTijk/exec"; 
+    const ACTION_LOG_URL = "https://script.google.com/macros/s/AKfycbw0FX42rZg7Mj5szTzesLfTga9ikFvzYOlFAU19-h-KCTl-HjY0KDjRZPEGphiEGIwRaA/exec"; 
     const APP_ID = 3;
 
     // 正解データ設定
