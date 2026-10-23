@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (hasVisitedSub) {
             // 【補助問題から戻ってきた後】何度間違えても移動させず、ここで粘らせる
-            showCustomAlert("不正解です。\n補助問題で確認したことを思い出して、もう一度作図を見直してみましょう！", () => {
+            showCustomAlert("間違いです。\n補助問題で確認したことを思い出して、もう一度作図を見直してみましょう！", () => {
                 createObjectStates(false); // リセットのみ行う
             });
         } else {
