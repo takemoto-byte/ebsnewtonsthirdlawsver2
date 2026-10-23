@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const INSTRUCTION_FONT = "16px 'Meiryo', sans-serif";
 
     // ログ設定（ここに入力してください）
-    const ACTION_LOG_URL = "https://script.google.com/macros/s/AKfycbw0FX42rZg7Mj5szTzesLfTga9ikFvzYOlFAU19-h-KCTl-HjY0KDjRZPEGphiEGIwRaA/exec"; 
+    const ACTION_LOG_URL = "https://script.google.com/macros/s/AKfycbx2qU3WE1mkCO0gz6G2oFCGuqgoU8GGTMklCCi0QvMzGbzie5AkW3imc9iGZMUvnir66Q/exec"; 
     const APP_ID = 2;
 
     // --- 正解データ ---
