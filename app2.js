@@ -685,5 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     createObjectStates(); 
-    gameLoop();           
+    gameLoop(); 
+    // 画面が開かれた瞬間のログ送信
+    sendActionLog(6);
 });
