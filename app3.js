@@ -688,12 +688,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!ACTION_LOG_URL) return;
             const userName = sessionStorage.getItem('physics_app_username') || "ゲスト";
+            
+            // 経過時間の計算
+            const startTime = parseInt(sessionStorage.getItem('physics_app_starttime'), 10) || Date.now();
+            const elapsedTime = (Date.now() - startTime) / 1000; // 秒に変換
+            
             const allVectors = [...box1Vectors];
             const vectorData = allVectors.map(v => ({
                 start: { x: v.startPos.x, y: v.startPos.y },
                 end:   { x: v.startPos.x + v.vx, y: v.startPos.y + v.vy }
             }));
-            const data = { name: userName, appId: APP_ID, actionType: actionType, vectors: vectorData };
+            const data = { name: userName, appId: APP_ID, actionType: actionType,time: elapsedTime, vectors: vectorData };
             if (navigator.sendBeacon) { navigator.sendBeacon(ACTION_LOG_URL, new Blob([JSON.stringify(data)], { type: 'text/plain' })); } 
             else { fetch(ACTION_LOG_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(data) }).catch(e => console.error(e)); }
         } catch(e) { console.error("Send log error:", e); }
