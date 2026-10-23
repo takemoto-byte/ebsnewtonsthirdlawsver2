@@ -607,7 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (hasCorrectGravity && hasUpwardForceFromCenter) {
                 generalErrorCount = 0; 
                 // ヒントが表示された瞬間のログ送信
-                sendActionLog(2-2);
+                sendActionLog(1-2);
                 // ★ alert を showCustomAlert に変更
                 showCustomAlert("ヒント：はたらいている力の大きさと向きはいいですね！上向きの力は物体の中心からはたらきますか？上向きの力は何という力かを思い出してもう一度作図しましょう！");
                 return false;
@@ -631,7 +631,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (hasCorrectNormalForce && hasDownwardForceFromBottom) {
                 generalErrorCount = 0; 
                 // ヒントが表示された瞬間のログ送信
-                sendActionLog(2-2);
+                sendActionLog(1-2);
                 // ★ alert を showCustomAlert に変更
                 showCustomAlert("ヒント：はたらいている力の大きさと向きはいいですね！下向きの力は床との接触面からはたらきますか？下向きの力は何という力かを思い出してもう一度作図しましょう！");
                 return false;
@@ -643,7 +643,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (generalErrorCount >= 5) {
                 generalErrorCount = 0; 
                 // ヒントが表示された瞬間のログ送信
-                sendActionLog(2-3);
+                sendActionLog(1-3);
                 // ヒントクイズが表示される。
                 showHintQuizModal(1);  
             } else {
