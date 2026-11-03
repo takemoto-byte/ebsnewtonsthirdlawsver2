@@ -283,8 +283,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
         
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
-        ctx.fillText("床の上に静止している質量1.5kgの緑色の物体にはたらく力をすべて作図して再生ボタンを押して", 10, 25);
-        ctx.fillText("みましょう。100gの物体にはたらく力の大きさを1.0Nとする。また、灰色の床ははかりになっている。", 10, 45);
+        ctx.fillText("補助問題", 10, 25);
+        ctx.fillText("床の上に静止している質量1.5kgの緑色の物体にはたらく力をすべて作図して再生ボタンを押して", 10, 45);
+        ctx.fillText("みましょう。再生ボタンを押すと作図が正しいか確かめられます。100gの物体にはたらく力の大きさを1.0Nとする。", 10, 65);
+        ctx.fillText("また、灰色の床ははかりになっている。", 10, 85);
 
         box1.draw(ctx);
 
@@ -474,15 +476,15 @@ document.addEventListener('DOMContentLoaded', () => {
             title.innerText = "ヒント2：この問題の場合、物体にはたらく重力の大きさは何Nだろう？";
             
             const subText = document.createElement('p');
-            subText.innerText = "（質量1.5kg、100gにはたらく力を1.0Nとする）";
+            subText.innerText = "（物体の質量は1.5kg、100gにはたらく力を1.0Nとする）";
             subText.style.fontSize = '14px'; subText.style.color = '#555'; subText.style.marginBottom = '20px';
             content.appendChild(subText);
 
             const options = [
-                { text: "1.5 N", correct: false, msg: "1.5kg は何gか計算してみよう。" },
-                { text: "10 N", correct: false, msg: "それは質量1.0kgのときの重力だね。" },
+                { text: "1.5 N", correct: false, msg: "桁が間違ってないかな。もう一度1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" },
+                { text: "10 N", correct: false, msg: "1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" },
                 { text: "15 N", correct: true, msg: "" },
-                { text: "150 N", correct: false, msg: "桁をもう一度確認してみよう。" }
+                { text: "150 N", correct: false, msg: "桁が間違ってないかな。もう一度1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" }
             ];
             options.forEach(opt => {
                 const btn = document.createElement('button');
