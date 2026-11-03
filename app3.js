@@ -299,9 +299,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
         
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
-        ctx.fillText("指で上から3.0Nの力で押されて床の上で静止している質量1.5kgの緑色の物体にはたらく力を", 10, 25);
-        ctx.fillText("すべて作図して再生ボタンを押してみましょう。100gの物体にはたらく力の大きさを１Nとする。", 10, 45);
-        ctx.fillText("また、灰色の床ははかりになっている。", 10, 65);
+        ctx.fillText("補助問題", 10, 25);
+        ctx.fillText("指で上から3.0Nの力で押されて床の上で静止している質量1.5kgの緑色の物体にはたらく力を", 10, 45);
+        ctx.fillText("すべて作図して再生ボタンを押してみましょう。再生ボタンを押すと作図が正しいか確かめられます。", 10, 65);
+        ctx.fillText("100gの物体にはたらく力の大きさを１Nとする。また、灰色の床ははかりになっている。", 10, 85);
 
         box1.draw(ctx);
         drawSnapPoints(ctx, box1, 'rgba(0, 200, 0, 0.4)'); 
@@ -490,15 +491,15 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (step === 2) {
             title.innerText = "ヒント2：この問題の場合、物体にはたらく重力の大きさは何Nだろう？";
             const subText = document.createElement('p');
-            subText.innerText = "（質量1.5kg、100gにはたらく力を1.0Nとする）";
+            subText.innerText = "（物体の質量は1.5kg、100gにはたらく力を1.0Nとする）";
             subText.style.fontSize = '14px'; subText.style.color = '#555'; subText.style.marginBottom = '20px';
             content.appendChild(subText);
 
             const options = [
-                { text: "1.5 N", correct: false, msg: "1.5kg は何gか計算してみよう。" },
-                { text: "10 N", correct: false, msg: "それは質量1.0kgのときの重力だね。" },
+                { text: "1.5 N", correct: false, msg: "桁が間違ってないかな。もう一度1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" },
+                { text: "10 N", correct: false, msg: "1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" },
                 { text: "15 N", correct: true, msg: "" },
-                { text: "18 N", correct: false, msg: "上から押される力を足していませんか？" }
+                { text: "18 N", correct: false, msg: "桁が間違ってないかな。もう一度1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" }
             ];
             options.forEach(opt => {
                 const btn = document.createElement('button');
@@ -528,9 +529,9 @@ document.addEventListener('DOMContentLoaded', () => {
             content.appendChild(subText);
 
             const options = [
-                { text: "3.0 N", correct: false, msg: "それだと下に沈んでしまうよ。" },
-                { text: "15 N", correct: false, msg: "それだと下に沈んでしまうよ。" },
-                { text: "12 N", correct: false, msg: "それだと下に沈んでしまうよ。" },
+                { text: "3.0 N", correct: false, msg: "それだと下に沈んでしまわないかな。" },
+                { text: "15 N", correct: false, msg: "それだと下に沈んでしまわないかな。" },
+                { text: "12 N", correct: false, msg: "それだと下に沈んでしまわないかな。" },
                 { text: "18 N", correct: true, msg: "" }
             ];
             options.forEach(opt => {
@@ -539,7 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.style.padding = '12px'; btn.style.fontSize = '16px'; btn.style.cursor = 'pointer';
                 btn.onclick = () => {
                     if (opt.correct) {
-                        alert("大正解！\n下向きの力の合計（重力15N + 指の力3N = 18N）と、上向きの垂直抗力がつり合います。\nつまり垂直抗力は18Nになりますね。それではもう一度力を作図してみよう！");
+                        alert("大正解！\n下向きの力の合計（重力と指から受ける力の合計）と、上向きの垂直抗力がつり合います。\nつまり垂直抗力は18Nになりますね。それではもう一度力を作図してみよう！");
                         modal.remove();
                         createObjectStates(false); // クイズ終了後にリセット
                     } else {
@@ -613,7 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (allCorrect) { 
             generalErrorCount = 0; 
-            showCustomAlert("正解です！", () => {
+            showCustomAlert("正解です！\nそれでは最初の問題に戻るのでもう一度考えてみましょう。", () => {
                 window.location.replace("main.html");
             });
             return true; 
@@ -663,7 +664,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (hasGravity15 && hasPush3 && hasNormal15) {
                     generalErrorCount = 0; // 専用フィードバックを出した場合は一般的なエラーカウントをリセット
                     sendActionLog("2-2")
-                    showCustomAlert("ヒント：はたらく力の種類はあっています。しかし、物体が床にめり込みましたね。床にめり込まないためにはどうなればいいかを考えてもう一度作図してみましょう。", () => {
+                    showCustomAlert("ヒント：はたらく力の種類はあっています。しかし、物体が床に沈んでいきましたね。床に沈まないためにはどうなればいいかを考えてもう一度作図してみましょう。", () => {
                         createObjectStates(false);
                     });
                     return false;
@@ -676,7 +677,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 sendActionLog("2-5")
                 showHintQuizModal(1, false); 
             } else {
-                showCustomAlert("不正解です。作図の大きさや向き、位置を見直してもう一度作図してみましょう。", () => {
+                showCustomAlert("間違いです。作図の大きさや向き、位置を見直してもう一度作図してみましょう。", () => {
                     createObjectStates(false); // OKを押した後にリセット
                 });
             }
