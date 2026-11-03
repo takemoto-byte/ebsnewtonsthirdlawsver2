@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 analyzeAndRedirect();
             } else {
                 const remaining = MAX_ATTEMPTS - attemptCount;
-                showCustomAlert(`間違いです。\nあと${remaining}回間違えると、この問題を考えるためのヒントとなる補助問題へ移動します。`, () => {
+                showCustomAlert(`間違いです。もう一度作図してみましょう。\nまた、あと${remaining}回間違えると、この問題を考えるためのヒントとなる補助問題へ移動します。`, () => {
                     createObjectStates(false); 
                 });
             }
@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sessionStorage.setItem('has_visited_sub', 'true'); 
         
         // alert を showCustomAlert に変更
-        showCustomAlert(`${MAX_ATTEMPTS}回不正解となりました。\n適した補助問題へ移動します。`, () => {
+        showCustomAlert(`${MAX_ATTEMPTS}回間違いました。\n適した補助問題へ移動します。`, () => {
             window.location.replace(destination);
         });
     }
@@ -437,8 +437,9 @@ function drawSimulation() {
         
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
         ctx.fillText("質量1.0kgの緑色の物体と質量0.50㎏の赤色の物体にはたらく力をすべて作図して", 10, 25);
-        ctx.fillText("再生ボタンを押してみましょう。ただし、1.0㎏の物体にはたらく重力の大きさ", 10, 45);
-        ctx.fillText("を10Nとする。また、灰色の床と緑色の物体の上面ははかりになっている。", 10, 65);
+        ctx.fillText("再生ボタンを押してみましょう。再生ボタンを押すと作図が正しいか確かめられます。", 10, 45);
+        ctx.fillText("ただし、1.0㎏の物体にはたらく重力の大きさを10Nとする。また、灰色の床と緑色の", 10, 65);
+        ctx.fillText("物体の上面ははかりになっている。", 10, 85);
         
         box1.draw(ctx); box2.draw(ctx);
         
