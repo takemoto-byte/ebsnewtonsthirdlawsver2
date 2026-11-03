@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const INSTRUCTION_FONT = "16px 'Meiryo', sans-serif";
 
     // ログ設定
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-VjWLVygBUE5aw6_cVQgQ4xQ_XQv3V4EpOw3o6HlQTyy1WoT8CxaxAsvBAF1-B-YP/exec"; 
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxDOdCyA2sh_jkBnsn6SQ6XJls8gj3PrycyvvNIoPas4hVtNGyPi_RhOdUwQPN1Sr1IGQ/exec"; 
     const ACTION_LOG_URL = "https://script.google.com/macros/s/AKfycbx2qU3WE1mkCO0gz6G2oFCGuqgoU8GGTMklCCi0QvMzGbzie5AkW3imc9iGZMUvnir66Q/exec"; 
     const APP_ID = 1;
 
