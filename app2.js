@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (step === 1) {
             title.innerText = "ヒント1：床の上で静止しているこの物体にはたらく力は何だろう？";
             const options = [
-                { text: "重力だけ", correct: false, msg: "物体は床の上に静止しているよ。重力だけだと床に沈まないかな？" },
+                { text: "重力だけ", correct: false, msg: "床から支えられないと、物体は下に沈んでいってしまうよ" },
                 { text: "垂直抗力だけ", correct: false, msg: "質量のある物体には必ず地球から引っ張られる力がはたらくよ。" },
                 { text: "重力と垂直抗力", correct: true, msg: "" },
                 { text: "重力と垂直抗力と押す力", correct: false, msg: "押す力ははたらいているかな？" }
