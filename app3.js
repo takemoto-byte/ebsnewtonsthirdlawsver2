@@ -641,7 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (hasDownwardPush && hasUpwardPushReaction) {
                 generalErrorCount = 0; 
                 sendActionLog("2-3")
-                showCustomAlert("ヒント：指で押す力と一緒に、上向きの力が描かれていますね。もしかして、物体が指を押し返す力（反作用）を描いていませんか？\n今作図しているのは「緑色の物体」にはたらく力だけです。物体が指を押す力は「指」にはたらく力なので、緑色の物体にはたらく力ではありません。これをふまえてもう一度考えてみましょう。", () => {
+                showCustomAlert("ヒント：灰色の床が測る重さや実際の動き（静止している）と違いませんか？\nもしかして、物体が指を押し返す力（反作用）も描いていませんか？\n今作図しているのは「緑色の物体」にはたらく力だけです。物体が指を押す力は「指」にはたらく力なので、緑色の物体にはたらく力ではありません。これらをふまえてもう一度考えてみましょう。", () => {
                     createObjectStates(false); // OKを押した後にリセット
                 });
                 return false;
