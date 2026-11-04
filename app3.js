@@ -266,6 +266,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = 'white'; 
         ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+        // ボタンの描画
+        drawButton(ctx, startButtonRect, START_BUTTON_COLOR_IDLE, "再生");
+        drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
+        drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
+        
         // 2.  直前の作図スクリーンショットを【最背面】に表示 
         if (previousAttemptImage) {
             ctx.save(); 
@@ -346,9 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fillText(`灰色の床がはかる重さ: ${calculatedMass1.toFixed(2)} kg`, 10, 390);
         }
         
-        drawButton(ctx, startButtonRect, START_BUTTON_COLOR_IDLE, "再生");
-        drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
-        drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
+
     }
 
     // --- ヘルパー関数群 ---
@@ -491,15 +494,15 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (step === 2) {
             title.innerText = "ヒント2：この問題の場合、物体にはたらく重力の大きさは何Nだろう？";
             const subText = document.createElement('p');
-            subText.innerText = "（物体の質量は1.5kg、100gにはたらく力を1.0Nとする）";
+            subText.innerText = "（重力15.0Nと指で押す力3.0Nが物体にはたらいて、物体は静止しています。100gにはたらく力を1.0Nとする）";
             subText.style.fontSize = '14px'; subText.style.color = '#555'; subText.style.marginBottom = '20px';
             content.appendChild(subText);
 
             const options = [
-                { text: "1.5 N", correct: false, msg: "桁が間違ってないかな。もう一度1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" },
+                { text: "1.5 N", correct: false, msg: "もう一度1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" },
                 { text: "10 N", correct: false, msg: "1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" },
                 { text: "15 N", correct: true, msg: "" },
-                { text: "18 N", correct: false, msg: "桁が間違ってないかな。もう一度1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" }
+                { text: "18 N", correct: false, msg: "指で押す力と重力を足して考えていませんか？重力は上から押されることで変化するのでしょうか？\nもう一度考えてみましょう。" }
             ];
             options.forEach(opt => {
                 const btn = document.createElement('button');
@@ -524,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (step === 3) {
             title.innerText = "ヒント3：このとき床からの垂直抗力は何Nになるだろう？";
             const subText = document.createElement('p');
-            subText.innerText = "（下向きに重力15.0Nと指で押す力3.0Nがはたらいて、物体は静止しています）";
+            subText.innerText = "（重力15.0Nと指で押す力3.0Nが物体にはたらいて、物体は静止しています。100gにはたらく力を1.0Nとする）";
             subText.style.fontSize = '14px'; subText.style.color = '#555'; subText.style.marginBottom = '15px';
             content.appendChild(subText);
 
