@@ -453,10 +453,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (step === 1) {
             title.innerText = "ヒント1：床の上で静止しているこの物体にはたらく力は何だろう？";
             const options = [
-                { text: "重力だけ", correct: false, msg: "物体は床の上に静止しているよ。重力だけだとどうなるかな？" },
+                { text: "重力だけ", correct: false, msg: "物体は床の上に静止しているよ。重力だけだと床に沈まないかな？" },
                 { text: "垂直抗力だけ", correct: false, msg: "質量のある物体には必ず地球から引っ張られる力がはたらくよ。" },
                 { text: "重力と垂直抗力", correct: true, msg: "" },
-                { text: "重力と垂直抗力と押す力", correct: false, msg: "押す力ははたらいているかな？。" }
+                { text: "重力と垂直抗力と押す力", correct: false, msg: "押す力ははたらいているかな？" }
             ];
             options.forEach(opt => {
                 const btn = document.createElement('button');
@@ -481,10 +481,10 @@ document.addEventListener('DOMContentLoaded', () => {
             content.appendChild(subText);
 
             const options = [
-                { text: "1.5 N", correct: false, msg: "桁が間違ってないかな。もう一度1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" },
+                { text: "1.5 N", correct: false, msg: "もう一度1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" },
                 { text: "10 N", correct: false, msg: "1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" },
                 { text: "15 N", correct: true, msg: "" },
-                { text: "150 N", correct: false, msg: "桁が間違ってないかな。もう一度1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" }
+                { text: "150 N", correct: false, msg: "もう一度1.5kg は何gか計算してみよう。またそれは何Nなのだろう。" }
             ];
             options.forEach(opt => {
                 const btn = document.createElement('button');
