@@ -265,11 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         ctx.fillStyle = 'white'; 
         ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-        // ボタンの描画
-        drawButton(ctx, startButtonRect, START_BUTTON_COLOR_IDLE, "再生");
-        drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
-        drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
         
         // 2.  直前の作図スクリーンショットを【最背面】に表示 
         if (previousAttemptImage) {
@@ -302,6 +297,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         ctx.fillStyle = FLOOR_COLOR; 
         ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
+
+        // ボタンの描画
+        drawButton(ctx, startButtonRect, START_BUTTON_COLOR_IDLE, "再生");
+        drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
+        drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
         
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
         ctx.fillText("補助問題", 10, 25);
