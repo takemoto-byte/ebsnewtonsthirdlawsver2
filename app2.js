@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const isCorrect = checkAnswer(); 
             if (!isCorrect) {
                 isRunning = false;
-                createObjectStates(false); // 不正解ならリセット(ログなし)
+
             }
         }, 1000); 
     }
