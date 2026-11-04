@@ -297,11 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         ctx.fillStyle = FLOOR_COLOR; 
         ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
-
-        // ボタンの描画
-        drawButton(ctx, startButtonRect, START_BUTTON_COLOR_IDLE, "再生");
-        drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
-        drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
         
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
         ctx.fillText("補助問題", 10, 25);
@@ -319,6 +314,17 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.drawImage(fingerImage, fingerX, fingerY, fingerWidth, fingerHeight);
         }
 
+
+        if (showMassText) {
+            ctx.font = BUTTON_FONT; ctx.fillStyle = 'black';
+            ctx.fillText(`灰色の床がはかる重さ: ${calculatedMass1.toFixed(2)} kg`, 10, 390);
+        }
+        
+        // ボタンの描画
+        drawButton(ctx, startButtonRect, START_BUTTON_COLOR_IDLE, "再生");
+        drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
+        drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
+        // 矢印の描画
         const startPosCounts = {}; 
         const drawWithOffset = (vectorList) => {
             vectorList.forEach(v => {
@@ -346,11 +352,6 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fillText(`${mag.toFixed(1)} N`, snappedEndPosX + 50, snappedEndPosY -20);
         }
         forceTextStamps.forEach(t => t.draw(ctx));
-        if (showMassText) {
-            ctx.font = BUTTON_FONT; ctx.fillStyle = 'black';
-            ctx.fillText(`灰色の床がはかる重さ: ${calculatedMass1.toFixed(2)} kg`, 10, 390);
-        }
-        
 
     }
 
