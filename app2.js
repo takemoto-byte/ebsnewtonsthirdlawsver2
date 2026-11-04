@@ -285,8 +285,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
         ctx.fillText("補助問題", 10, 25);
         ctx.fillText("床の上に静止している質量1.5kgの緑色の物体にはたらく力をすべて作図して再生ボタンを押して", 10, 45);
-        ctx.fillText("みましょう。再生ボタンを押すと作図が正しいか確かめられます。100gの物体にはたらく力の大きさを1.0Nとする。", 10, 65);
-        ctx.fillText("また、灰色の床ははかりになっている。", 10, 85);
+        ctx.fillText("みましょう。再生ボタンを押すと作図が正しいか確かめられます。100gの物体にはたらく力の大きさを", 10, 65);
+        ctx.fillText("1.0Nとする。また、灰色の床ははかりになっている。", 10, 85);
 
         box1.draw(ctx);
 
