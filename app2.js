@@ -612,7 +612,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 // ヒントが表示された瞬間のログ送信
                 sendActionLog("1-2");
                 // ★ alert を showCustomAlert に変更
-                showCustomAlert("ヒント：はたらいている力の大きさと向きはいいですね！上向きの力は物体の中心からはたらきますか？上向きの力は何という力かを思い出してもう一度作図しましょう！");
+                showCustomAlert("ヒント：はたらいている力の大きさと向きはいいですね！上向きの力は物体の中心からはたらきますか？上向きの力は何という力かを思い出してもう一度作図しましょう！", () => {
+                    createObjectStates(false); // OKを押した後にリセット
+                });
                 return false;
             }
 
@@ -636,7 +638,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 // ヒントが表示された瞬間のログ送信
                 sendActionLog("1-2");
                 // ★ alert を showCustomAlert に変更
-                showCustomAlert("ヒント：はたらいている力の大きさと向きはいいですね！下向きの力は床との接触面からはたらきますか？下向きの力は何という力かを思い出してもう一度作図しましょう！");
+                showCustomAlert("ヒント：はたらいている力の大きさと向きはいいですね！下向きの力は床との接触面からはたらきますか？下向きの力は何という力かを思い出してもう一度作図しましょう！", () => {
+                    createObjectStates(false); // OKを押した後にリセット
+                });
                 return false;
             }
 
@@ -651,7 +655,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 showHintQuizModal(1);  
             } else {
                 // alert を showCustomAlert に変更
-                showCustomAlert("間違いです。作図の大きさや向き、位置を見直してもう一度作図してみましょう。"); 
+                showCustomAlert("間違いです。作図の大きさや向き、位置を見直してもう一度作図してみましょう。", () => {
+                    createObjectStates(false); // OKを押した後にリセット
+                }); 
             }
             return false; 
         }
