@@ -434,11 +434,6 @@ function drawSimulation() {
         
         ctx.fillStyle = FLOOR_COLOR; 
         ctx.fillRect(floorRect.x, floorRect.y, floorRect.width, floorRect.height);
-
-        // 3つのボタンを描画
-        drawButton(ctx, startButtonRect, START_BUTTON_COLOR_IDLE, "再生");
-        drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
-        drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
         
         ctx.fillStyle = 'black'; ctx.font = INSTRUCTION_FONT;
         ctx.fillText("質量1.0kgの緑色の物体と質量0.50㎏の赤色の物体にはたらく力をすべて作図して", 10, 25);
@@ -450,7 +445,18 @@ function drawSimulation() {
         
         drawSnapPoints(ctx, box1, 'rgba(0, 200, 0, 0.4)'); // 緑色の半透明
         drawSnapPoints(ctx, box2, 'rgba(200, 0, 0, 0.4)'); // 赤色の半透明
+    
+        if (showMassText) {
+            ctx.font = BUTTON_FONT; ctx.fillStyle = 'black'; 
+            ctx.fillText(`灰色の床がはかる重さ `, 10, 305); ctx.fillText(` ${calculatedMass1.toFixed(2)} kg`, 10, 330);
+            ctx.fillText(`緑色の物体の上面がはかる重さ`, 10, 355); ctx.fillText(` ${calculatedMass2.toFixed(2)} kg`, 10, 380);
+        }
+        // 3つのボタンを描画
+        drawButton(ctx, startButtonRect, START_BUTTON_COLOR_IDLE, "再生");
+        drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
+        drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
 
+        // 矢印の描画
         const startPosCounts = {}; 
         const drawWithOffset = (vectorList) => {
             vectorList.forEach(v => {
@@ -478,13 +484,6 @@ function drawSimulation() {
             ctx.fillText(`${mag.toFixed(1)} N`, snappedEndPosX + 50, snappedEndPosY -20);
         }
         forceTextStamps.forEach(t => t.draw(ctx));
-        if (showMassText) {
-            ctx.font = BUTTON_FONT; ctx.fillStyle = 'black'; 
-            ctx.fillText(`灰色の床がはかる重さ `, 10, 305); ctx.fillText(` ${calculatedMass1.toFixed(2)} kg`, 10, 330);
-            ctx.fillText(`緑色の物体の上面がはかる重さ`, 10, 355); ctx.fillText(` ${calculatedMass2.toFixed(2)} kg`, 10, 380);
-        }
-        
-
     }
     
     // --- ヘルパー関数群 ---
