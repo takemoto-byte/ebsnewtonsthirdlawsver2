@@ -402,7 +402,12 @@ function drawSimulation() {
         ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         ctx.fillStyle = 'white'; 
         ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-
+        
+        // 3つのボタンを描画
+        drawButton(ctx, startButtonRect, START_BUTTON_COLOR_IDLE, "再生");
+        drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
+        drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
+    
         // 2. 直前の作図スクリーンショットを【最背面】に表示 
         if (previousAttemptImage) {
             ctx.save(); // 現在の描画状態を保存
@@ -479,10 +484,7 @@ function drawSimulation() {
             ctx.fillText(`緑色の物体の上面がはかる重さ`, 10, 355); ctx.fillText(` ${calculatedMass2.toFixed(2)} kg`, 10, 380);
         }
         
-        // 3つのボタンを描画
-        drawButton(ctx, startButtonRect, START_BUTTON_COLOR_IDLE, "再生");
-        drawButton(ctx, undoButtonRect,  UNDO_BUTTON_COLOR_IDLE,  "1つ戻る");
-        drawButton(ctx, resetButtonRect, RESET_BUTTON_COLOR_IDLE, "リセット");
+
     }
     
     // --- ヘルパー関数群 ---
