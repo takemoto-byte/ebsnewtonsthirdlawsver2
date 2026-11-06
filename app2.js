@@ -495,6 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (opt.correct) {
                         alert("大正解！\n1.5kg = 1500g だから、重力は 15N になるね。\nそれではもう一度力を作図してみよう！");
                         modal.remove(); // クイズ終了、作図に戻る
+                        createObjectStates(false); // クイズ終了後にリセット
                     } else {
                         alert("惜しい！\n" + opt.msg);
                     }
