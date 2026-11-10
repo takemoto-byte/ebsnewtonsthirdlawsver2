@@ -514,6 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (isSpecificError) {
                             alert("大正解！\n1.5kg = 1500g だから、重力は 15N になるね。\n力の種類と大きさがわかりましたね！それではもう一度気をつけて力を作図してみよう！");
                             modal.remove();
+                            sendActionLog("2-4_OK");
                             createObjectStates(false); // クイズ終了後にリセット
                         } else {
                             alert("大正解！\n1.5kg = 1500g だから、重力は 15N になるね。\nそれでは、最後のステップで床からの力を考えてみよう！");
@@ -546,6 +547,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (opt.correct) {
                         alert("大正解！\n下向きの力の合計（重力と指から受ける力の合計）と、上向きの垂直抗力がつり合います。\nつまり垂直抗力は18Nになりますね。それではもう一度力を作図してみよう！");
                         modal.remove();
+                        sendActionLog("2-5_OK");
                         createObjectStates(false); // クイズ終了後にリセット
                     } else {
                         alert("惜しい！\n" + opt.msg + "\n物体が静止しているとき、力はつり合っています。");
