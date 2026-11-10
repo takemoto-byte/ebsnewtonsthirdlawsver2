@@ -556,7 +556,7 @@ function drawSimulation() {
         ctx.fillStyle = color;
         snapPoints.forEach(p => {
             ctx.beginPath();
-            ctx.arc(p.x, p.y, 8, 0, Math.PI * 2); // 半径8の円を描画
+            ctx.arc(p.x, p.y, 6, 0, Math.PI * 2); // 半径8の円を描画
             ctx.fill();
         });
     }
