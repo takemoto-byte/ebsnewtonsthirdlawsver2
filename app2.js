@@ -641,8 +641,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 sendActionLog("1-2");
                 // ★ alert を showCustomAlert に変更
                 showCustomAlert("ヒント：はたらいている力の大きさと向きはいいですね！下向きの力は床との接触面からはたらきますか？下向きの力は何という力かを思い出してもう一度作図しましょう！", () => {
+                    sendActionLog("1-2_OK");
                     createObjectStates(false); // OKを押した後にリセット
-                sendActionLog("1-2終");
+                
                 });
                 return false;
             }
