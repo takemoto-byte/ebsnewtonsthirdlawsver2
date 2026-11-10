@@ -612,8 +612,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 generalErrorCount = 0; 
                 // ヒントが表示された瞬間のログ送信
                 sendActionLog("1-2");
-                // ★ alert を showCustomAlert に変更
+                // alert を showCustomAlert に変更
                 showCustomAlert("ヒント：はたらいている力の大きさと向きはいいですね！上向きの力は物体の中心からはたらきますか？上向きの力は何という力かを思い出してもう一度作図しましょう！", () => {
+                    sendActionLog("1-2_OK");
                     createObjectStates(false); // OKを押した後にリセット
                 });
                 return false;
