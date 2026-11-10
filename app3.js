@@ -423,7 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = color;
         snapPoints.forEach(p => {
             ctx.beginPath();
-            ctx.arc(p.x, p.y, 8, 0, Math.PI * 2); 
+            ctx.arc(p.x, p.y, 6, 0, Math.PI * 2);  // 半円の半径を設定
             ctx.fill();
         });
     }
