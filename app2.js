@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = color;
         snapPoints.forEach(p => {
             ctx.beginPath();
-            ctx.arc(p.x, p.y, 8, 0, Math.PI * 2); // 半径8の円を描画（大きさは好みで調整してください）
+            ctx.arc(p.x, p.y, 6, 0, Math.PI * 2); // 半径8の円を描画（大きさは好みで調整してください）
             ctx.fill();
         });
     }
@@ -574,7 +574,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (allCorrect) { 
             generalErrorCount = 0; // 正解したらリセット
-            // ★ alert を showCustomAlert に変更
+            // alert を showCustomAlert に変更
             showCustomAlert("正解です！次の補助問題に移行します。", () => {
                 window.location.replace("index3.html"); 
             });
@@ -582,13 +582,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } else { 
             const userVectors = box1Vectors;
 
-            // ★ 追加：不正解が確定したので、一時保存したスクショを「前回作図」としてセット
+            //  不正解が確定したので、一時保存したスクショを「前回作図」としてセット
             if (currentAttemptDataURL) {
                 previousAttemptImage = new Image();
                 previousAttemptImage.src = currentAttemptDataURL;
             }
             
-            // --- ★誤概念の診断・専用フィードバックロジック ---
+            // 誤概念の診断・専用フィードバックロジック 
 
             const centerPos = getTargetPos(box1, 'center');
             const bottomPos = getTargetPos(box1, 'bottom');
