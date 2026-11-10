@@ -495,7 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (step === 2) {
             title.innerText = "ヒント2：この問題の場合、物体にはたらく重力の大きさは何Nだろう？";
             const subText = document.createElement('p');
-            subText.innerText = "（重力15.0Nと指で押す力3.0Nが物体にはたらいて、物体は静止しています。100gにはたらく力を1.0Nとする）";
+            subText.innerText = "（指で押す力3.0Nが質量1.5㎏の物体にはたらいて、物体は静止しています。100gにはたらく力を1.0Nとする）";
             subText.style.fontSize = '14px'; subText.style.color = '#555'; subText.style.marginBottom = '20px';
             content.appendChild(subText);
 
@@ -528,7 +528,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (step === 3) {
             title.innerText = "ヒント3：このとき床からの垂直抗力は何Nになるだろう？";
             const subText = document.createElement('p');
-            subText.innerText = "（重力15.0Nと指で押す力3.0Nが物体にはたらいて、物体は静止しています。100gにはたらく力を1.0Nとする）";
+            subText.innerText = "（指で押す力3.0Nが質量1.5㎏の物体にはたらいて、物体は静止しています。100gにはたらく力を1.0Nとする）";
             subText.style.fontSize = '14px'; subText.style.color = '#555'; subText.style.marginBottom = '15px';
             content.appendChild(subText);
 
