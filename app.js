@@ -660,6 +660,6 @@ function drawSimulation() {
         if (e.target !== canvas) {
             e.preventDefault();
         }
-    }, { passive: false }
+    }, { passive: false }});
                               
 });
