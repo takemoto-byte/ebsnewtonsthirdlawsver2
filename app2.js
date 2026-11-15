@@ -708,6 +708,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target !== canvas) {
             e.preventDefault();
         }
-    }, { passive: false }});
+    }, { passive: false });
                               
 });
