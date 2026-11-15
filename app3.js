@@ -728,4 +728,13 @@ document.addEventListener('DOMContentLoaded', () => {
     gameLoop();     
     // 画面が開かれた瞬間のログ送信
     sendActionLog(7);
+
+    // 画面全体（黒い背景部分も含め）でのスワイプによるスクロールやリロードを強制ブロック
+    document.addEventListener('touchmove', function(e) {
+        // キャンバス内の意図したタッチ操作以外をすべて無効化する
+        if (e.target !== canvas) {
+            e.preventDefault();
+        }
+    }, { passive: false }
+                              
 });
